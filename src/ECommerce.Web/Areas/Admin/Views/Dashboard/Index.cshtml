@@ -1,0 +1,29 @@
+@{
+  ViewData["Title"] = "Admin Dashboard";
+  int productCount = ViewBag.ProductCount ?? 0;
+  int orderCount = ViewBag.OrderCount ?? 0;
+  int revenueCents = ViewBag.RevenueCents ?? 0;
+}
+<h1>Admin</h1>
+<div class="grid">
+  <div class="card">
+    <strong>Products</strong>
+    <p class="badge">@productCount</p>
+    <a class="btn" href="/admin/products">Manage</a>
+  </div>
+  <div class="card">
+    <strong>Orders</strong>
+    <p class="badge">@orderCount</p>
+    <a class="btn" href="/admin/orders">View</a>
+  </div>
+  <div class="card">
+    <strong>Revenue (non-cancelled)</strong>
+    <p><strong>$@((revenueCents/100.0).ToString("0.00"))</strong></p>
+  </div>
+</div>
+
+<div class="card" style="margin-top:12px;">
+  <a class="btn" href="/admin/categories">Categories</a>
+  <a class="btn" href="/admin/products">Products</a>
+  <a class="btn" href="/admin/orders">Orders</a>
+</div>

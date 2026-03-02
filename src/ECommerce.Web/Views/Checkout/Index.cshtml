@@ -1,0 +1,39 @@
+@model ECommerce.Web.Services.CheckoutRequest
+@{
+  ViewData["Title"] = "Checkout";
+}
+
+<h1>Checkout</h1>
+
+<div class="card">
+  <form method="post" action="/checkout/placeorder">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+      <div style="grid-column: span 2;">
+        <label>Full name</label>
+        <input class="input" name="ShippingName" value="@Model.ShippingName" required />
+      </div>
+      <div style="grid-column: span 2;">
+        <label>Address</label>
+        <input class="input" name="ShippingAddress1" value="@Model.ShippingAddress1" required />
+      </div>
+      <div>
+        <label>City</label>
+        <input class="input" name="ShippingCity" value="@Model.ShippingCity" required />
+      </div>
+      <div>
+        <label>State</label>
+        <input class="input" name="ShippingState" value="@Model.ShippingState" required />
+      </div>
+      <div>
+        <label>Postal Code</label>
+        <input class="input" name="ShippingPostalCode" value="@Model.ShippingPostalCode" required />
+      </div>
+      <div>
+        <label>Coupon (optional)</label>
+        <input class="input" name="CouponCode" value="@Model.CouponCode" placeholder="SAVE10" />
+      </div>
+    </div>
+
+    <button class="btn primary" type="submit" style="margin-top:12px;">Place order</button>
+  </form>
+</div>

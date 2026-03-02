@@ -1,0 +1,17 @@
+@model int
+@{
+  ViewData["Title"] = "Pay";
+  var msg = TempData["PayMessage"] as string;
+}
+<h1>Payment</h1>
+<div class="card">
+  <p>This demo uses a mock payment gateway. No card data is collected.</p>
+  @if (!string.IsNullOrWhiteSpace(msg))
+  {
+    <p class="badge">@msg</p>
+  }
+  <form method="post" action="/checkout/paynow">
+    <input type="hidden" name="id" value="@Model" />
+    <button class="btn primary" type="submit">Pay now (Mock)</button>
+  </form>
+</div>

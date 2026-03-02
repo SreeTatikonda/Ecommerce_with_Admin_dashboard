@@ -1,0 +1,48 @@
+@model ECommerce.Web.Models.Product
+@{
+  ViewData["Title"] = "Edit Product";
+  var cats = ViewBag.Categories as List<ECommerce.Web.Models.Category>;
+}
+<h1>Edit Product</h1>
+<div class="card">
+  <form method="post">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <label>Name</label>
+    <input class="input" name="Name" value="@Model.Name" required />
+    <label style="margin-top:10px;">Slug</label>
+    <input class="input" name="Slug" value="@Model.Slug" required />
+
+    <label style="margin-top:10px;">Description</label>
+    <input class="input" name="Description" value="@Model.Description" />
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px;">
+      <div>
+        <label>Price (cents)</label>
+        <input class="input" name="PriceCents" type="number" min="0" value="@Model.PriceCents" required />
+      </div>
+      <div>
+        <label>Stock</label>
+        <input class="input" name="Stock" type="number" min="0" value="@Model.Stock" required />
+      </div>
+    </div>
+
+    <label style="margin-top:10px;">Category</label>
+    <select class="input" name="CategoryId" required>
+      @if (cats != null)
+      {
+        foreach (var c in cats)
+        {
+          <option value="@c.Id" selected="@(Model.CategoryId == c.Id)">@c.Name</option>
+        }
+      }
+    </select>
+
+    <label style="margin-top:10px;">
+      <input type="checkbox" name="IsActive" value="true" @(Model.IsActive ? "checked" : "") />
+      Active
+    </label>
+
+    <button class="btn primary" type="submit" style="margin-top:12px;">Save</button>
+  </form>
+</div>

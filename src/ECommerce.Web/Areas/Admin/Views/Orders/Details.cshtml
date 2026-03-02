@@ -1,0 +1,50 @@
+@model ECommerce.Web.Models.Order
+@{
+  ViewData["Title"] = $"Order {Model.Id}";
+}
+<h1>Order #@Model.Id</h1>
+
+<div class="card">
+  <div class="row">
+    <span class="badge">@Model.Status</span>
+    <span class="badge">Total $@((Model.TotalCents/100.0).ToString("0.00"))</span>
+  </div>
+
+  <h3 style="margin-top:10px;">Update status</h3>
+  <form method="post" action="/admin/orders/updatestatus" class="row">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <select class="input" name="status" style="max-width:240px;">
+      @foreach (var s in Enum.GetValues<ECommerce.Web.Models.OrderStatus>())
+      {
+        <option value="@s" selected="@(Model.Status == s)">@s</option>
+      }
+    </select>
+    <button class="btn primary" type="submit">Update</button>
+  </form>
+
+  <h3 style="margin-top:10px;">Items</h3>
+  <table class="table">
+    <thead><tr><th>Item</th><th>Unit</th><th>Qty</th><th>Total</th></tr></thead>
+    <tbody>
+      @foreach (var it in Model.Items)
+      {
+        <tr>
+          <td>@it.ProductName</td>
+          <td>$@((it.UnitPriceCents/100.0).ToString("0.00"))</td>
+          <td>@it.Quantity</td>
+          <td>$@((it.LineTotalCents/100.0).ToString("0.00"))</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:10px;">Payment</h3>
+  @if (Model.Payment is null)
+  {
+    <p class="badge">No payment record.</p>
+  }
+  else
+  {
+    <p class="badge">@Model.Payment.Provider - @Model.Payment.Status - @Model.Payment.ProviderReference</p>
+  }
+</div>

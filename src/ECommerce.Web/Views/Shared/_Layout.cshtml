@@ -1,0 +1,48 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ECommerce.Web.Models.AppUser> SignInManager
+@inject UserManager<ECommerce.Web.Models.AppUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@ViewData["Title"] - ECommerce MVP</title>
+  <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">ECommerce MVP</a>
+  <nav class="nav">
+    <a href="/">Store</a>
+    <a href="/cart">Cart</a>
+    @if (SignInManager.IsSignedIn(User))
+    {
+      <a href="/orders">My Orders</a>
+      <form method="post" action="/auth/logout" style="display:inline">
+        <button class="linkbtn" type="submit">Logout</button>
+      </form>
+      @if (User.IsInRole("Admin"))
+      {
+        <a href="/admin">Admin</a>
+      }
+    }
+    else
+    {
+      <a href="/auth/login">Login</a>
+      <a href="/auth/register">Register</a>
+    }
+  </nav>
+</header>
+
+<main class="container">
+  @RenderBody()
+</main>
+
+<footer class="footer">
+  <small>Demo only. Payments are mock.</small>
+</footer>
+
+@RenderSection("Scripts", required: false)
+</body>
+</html>

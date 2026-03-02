@@ -1,0 +1,28 @@
+@model List<ECommerce.Web.Models.Category>
+@{
+  ViewData["Title"] = "Categories";
+}
+<h1>Categories</h1>
+<div class="card">
+  <a class="btn primary" href="/admin/categories/create">New category</a>
+</div>
+
+<table class="table">
+  <thead><tr><th>Name</th><th>Slug</th><th></th></tr></thead>
+  <tbody>
+    @foreach (var c in Model)
+    {
+      <tr>
+        <td>@c.Name</td>
+        <td>@c.Slug</td>
+        <td class="row" style="justify-content:flex-end;">
+          <a class="btn" href="/admin/categories/edit/@c.Id">Edit</a>
+          <form method="post" action="/admin/categories/delete">
+            <input type="hidden" name="id" value="@c.Id" />
+            <button class="btn danger" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

@@ -1,0 +1,46 @@
+@model List<ECommerce.Web.Models.Product>
+@{
+  ViewData["Title"] = "Store";
+  var cats = ViewBag.Categories as List<ECommerce.Web.Models.Category>;
+}
+
+<h1>Catalog</h1>
+
+@if (cats != null && cats.Count > 0)
+{
+  <div class="row" style="margin: 12px 0;">
+    <div>
+      <span class="badge">Categories</span>
+      <a class="badge" href="/">All</a>
+      @foreach (var c in cats)
+      {
+        <a class="badge" href="/?category=@c.Slug">@c.Name</a>
+      }
+    </div>
+  </div>
+}
+
+<div class="grid">
+@foreach (var p in Model)
+{
+  <div class="card">
+    <div class="row">
+      <strong>@p.Name</strong>
+      <span class="badge">@p.Category?.Name</span>
+    </div>
+    <p style="color:var(--muted)">@p.Description</p>
+    <div class="row">
+      <span><strong>$@((p.PriceCents/100.0).ToString("0.00"))</strong></span>
+      <span class="badge">Stock: @p.Stock</span>
+    </div>
+    <div class="row" style="margin-top:10px;">
+      <a class="btn" href="/store/product/@p.Id">View</a>
+      <form method="post" action="/cart/add">
+        <input type="hidden" name="productId" value="@p.Id" />
+        <input type="hidden" name="qty" value="1" />
+        <button class="btn primary" type="submit">Add to cart</button>
+      </form>
+    </div>
+  </div>
+}
+</div>

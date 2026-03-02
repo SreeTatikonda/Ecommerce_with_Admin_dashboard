@@ -1,0 +1,63 @@
+@model ECommerce.Web.Models.Cart
+@{
+  ViewData["Title"] = "Cart";
+  var subtotal = Model.Items.Sum(i => i.UnitPriceCents * i.Quantity);
+}
+
+<h1>Your Cart</h1>
+
+@if (Model.Items.Count == 0)
+{
+  <div class="card">
+    <p>Your cart is empty.</p>
+    <a class="btn primary" href="/">Continue shopping</a>
+  </div>
+}
+else
+{
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Unit</th>
+        <th>Qty</th>
+        <th>Total</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var it in Model.Items)
+      {
+        <tr>
+          <td>@it.Product?.Name</td>
+          <td>$@((it.UnitPriceCents/100.0).ToString("0.00"))</td>
+          <td>
+            <form method="post" action="/cart/updateqty" class="row">
+              <input type="hidden" name="productId" value="@it.ProductId" />
+              <input class="input" style="max-width:90px" type="number" min="0" name="qty" value="@it.Quantity" />
+              <button class="btn" type="submit">Update</button>
+            </form>
+          </td>
+          <td>$@(((it.UnitPriceCents*it.Quantity)/100.0).ToString("0.00"))</td>
+          <td>
+            <form method="post" action="/cart/remove">
+              <input type="hidden" name="productId" value="@it.ProductId" />
+              <button class="btn danger" type="submit">Remove</button>
+            </form>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="card" style="margin-top:12px;">
+    <div class="row">
+      <strong>Subtotal</strong>
+      <strong>$@((subtotal/100.0).ToString("0.00"))</strong>
+    </div>
+    <div class="row" style="margin-top:10px;">
+      <a class="btn" href="/">Continue shopping</a>
+      <a class="btn primary" href="/checkout">Checkout</a>
+    </div>
+  </div>
+}

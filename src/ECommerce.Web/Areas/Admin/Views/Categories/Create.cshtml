@@ -1,0 +1,14 @@
+@model ECommerce.Web.Models.Category
+@{
+  ViewData["Title"] = "Create Category";
+}
+<h1>Create Category</h1>
+<div class="card">
+  <form method="post">
+    <label>Name</label>
+    <input class="input" name="Name" value="@Model.Name" required />
+    <label style="margin-top:10px;">Slug</label>
+    <input class="input" name="Slug" value="@Model.Slug" placeholder="e.g., electronics" required />
+    <button class="btn primary" type="submit" style="margin-top:12px;">Save</button>
+  </form>
+</div>

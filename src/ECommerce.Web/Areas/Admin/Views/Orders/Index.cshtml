@@ -1,0 +1,22 @@
+@model List<ECommerce.Web.Models.Order>
+@{
+  ViewData["Title"] = "Orders";
+}
+<h1>Orders</h1>
+
+<table class="table">
+  <thead><tr><th>#</th><th>User</th><th>Date</th><th>Status</th><th>Total</th><th></th></tr></thead>
+  <tbody>
+    @foreach (var o in Model)
+    {
+      <tr>
+        <td>@o.Id</td>
+        <td>@o.UserId</td>
+        <td>@o.CreatedUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+        <td><span class="badge">@o.Status</span></td>
+        <td>$@((o.TotalCents/100.0).ToString("0.00"))</td>
+        <td><a class="btn" href="/admin/orders/details/@o.Id">Details</a></td>
+      </tr>
+    }
+  </tbody>
+</table>

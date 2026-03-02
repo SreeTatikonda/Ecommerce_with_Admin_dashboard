@@ -1,0 +1,31 @@
+@model List<ECommerce.Web.Models.Product>
+@{
+  ViewData["Title"] = "Products";
+}
+<h1>Products</h1>
+<div class="card">
+  <a class="btn primary" href="/admin/products/create">New product</a>
+</div>
+
+<table class="table">
+  <thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Active</th><th></th></tr></thead>
+  <tbody>
+    @foreach (var p in Model)
+    {
+      <tr>
+        <td>@p.Name</td>
+        <td>@p.Category?.Name</td>
+        <td>$@((p.PriceCents/100.0).ToString("0.00"))</td>
+        <td>@p.Stock</td>
+        <td>@(p.IsActive ? "Yes" : "No")</td>
+        <td class="row" style="justify-content:flex-end;">
+          <a class="btn" href="/admin/products/edit/@p.Id">Edit</a>
+          <form method="post" action="/admin/products/delete">
+            <input type="hidden" name="id" value="@p.Id" />
+            <button class="btn danger" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

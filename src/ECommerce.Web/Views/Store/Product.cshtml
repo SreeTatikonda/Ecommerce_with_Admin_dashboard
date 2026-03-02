@@ -1,0 +1,22 @@
+@model ECommerce.Web.Models.Product
+@{
+  ViewData["Title"] = Model.Name;
+}
+<h1>@Model.Name</h1>
+<div class="card">
+  <div class="row">
+    <span class="badge">@Model.Category?.Name</span>
+    <span class="badge">Stock: @Model.Stock</span>
+  </div>
+  <p style="color:var(--muted)">@Model.Description</p>
+  <p><strong>$@((Model.PriceCents/100.0).ToString("0.00"))</strong></p>
+
+  <form method="post" action="/cart/add" class="row">
+    <input type="hidden" name="productId" value="@Model.Id" />
+    <div style="max-width:120px;">
+      <label>Qty</label>
+      <input class="input" type="number" min="1" value="1" name="qty" />
+    </div>
+    <button class="btn primary" type="submit">Add to cart</button>
+  </form>
+</div>

@@ -1,0 +1,1 @@
+Admin area is configured by route mapping in Program.cs.
